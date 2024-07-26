@@ -516,4 +516,8 @@ fn test_parsing_usb_port_information() {
     assert_eq!(info.serial_number, Some("385435603432".to_string()));
     #[cfg(feature = "usbportinfo-interface")]
     assert_eq!(info.interface, None);
+
+    let unicode_serial = r"USB\VID_F055&PID_9802\3854356β03432";
+    let info = parse_usb_port_info(unicode_serial, None).unwrap();
+    assert_eq!(info.serial_number.as_deref(), Some("3854356β03432"));
 }
